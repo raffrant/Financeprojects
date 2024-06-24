@@ -33,6 +33,6 @@ class BrownianMotion(object):
 
 mu = 1
 n = 1000
-sigma = np.arange(0.8, 4, 0.2)
+sigma = np.linspace(0.5, 4.5, 9)
 dt = 0.001
 BrownianMotion(sigma,mu,n,dt).plot()
