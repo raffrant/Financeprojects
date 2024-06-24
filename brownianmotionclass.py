@@ -9,7 +9,7 @@ class BrownianMotion(object):
         self.__dtime=dtime
         self.__avg=avg
     
-    def get_stocks(self):
+    def get_assets(self):
         s=np.array([100*np.ones(self.__steps) for i in range(len(self.__variance))])
         for k in range(len(self.__variance)):
           for i in range(self.__steps-1):
@@ -18,7 +18,7 @@ class BrownianMotion(object):
   
         return s 
     def plot(self):
-       y=self.get_stocks()
+       y=self.get_assets()
        cmap = mpl.colormaps['plasma']
        colors = cmap(np.linspace(0, 1, len(self.__variance)))
        colormap = np.array([colors[i] for i in range(len(colors))])
