@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-
 class BrownianMotion(object):
     def __init__(self,variance,avg,steps,dtime):
         self.__variance=variance
@@ -23,13 +22,12 @@ class BrownianMotion(object):
        colors = cmap(np.linspace(0, 1, len(self.__variance)))
        colormap = np.array([colors[i] for i in range(len(colors))])
        for i in range(len(self.__variance)): 
-        plt.scatter(range(self.__steps),y[i],c=colormap[i],label='s=%s'%(self.__variance[i]))
+        plt.scatter(range(self.__steps),y[i],c=[colormap[i] for k in range(self.__steps)],label='s=%s'%(self.__variance[i]))
        plt.legend()    
        plt.title("Brownian Motion with different variance")
        plt.xlabel("Time")
        plt.ylabel("Asset Value")
        plt.show()
-
 
 mu = 1
 n = 1000
