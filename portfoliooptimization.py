@@ -4,100 +4,115 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from scipy.optimize import minimize
 
-class MeanVarianceOptimizer:
-    def __init__(self, expected_returns, cov_matrix, risk_aversion=1.0):
+class PortfolioOptimizer:
+    def __init__(self, expected_returns, covariance_matrix, risk_aversion=1.0):
         """
-        expected_returns: numpy array of expected returns (annualized)
-        cov_matrix: covariance matrix of the returns (annualized)
-        risk_aversion: lambda parameter controlling tradeoff between risk and return
+        Initialize the optimizer with expected returns, covariance of returns,
+        and a parameter to balance risk versus return.
+
+        Parameters:
+        - expected_returns: np.array of annualized returns for each stock
+        - covariance_matrix: np.array covariance matrix of annualized returns
+        - risk_aversion: float, higher means more cautious about risk
         """
         self.expected_returns = expected_returns
-        self.cov_matrix = cov_matrix
+        self.covariance_matrix = covariance_matrix
         self.risk_aversion = risk_aversion
         self.num_assets = len(expected_returns)
         self.weights = None
 
     def optimize(self):
+        """
+        Find the portfolio weights that maximize return for a given risk appetite.
+        This solves the classic mean-variance optimization problem.
+        """
         def objective(weights):
-            # Mean-variance objective to minimize: -return + lambda * variance
-            ret = np.dot(weights, self.expected_returns)
-            var = np.dot(weights, np.dot(self.cov_matrix, weights))
-            return -ret + self.risk_aversion * var
+            # Negative because we minimize in scipy
+            expected_portfolio_return = np.dot(weights, self.expected_returns)
+            portfolio_variance = np.dot(weights, np.dot(self.covariance_matrix, weights))
+            return -expected_portfolio_return + self.risk_aversion * portfolio_variance
 
-        constraints = ({'type': 'eq', 'fun': lambda w: np.sum(w) - 1})
-        bounds = [(0, 1)] * self.num_assets
-        initial_guess = np.ones(self.num_assets) / self.num_assets
+        # The weights have to sum to 1 (all your money allocated)
+        constraints = ({'type': 'eq', 'fun': lambda weights: np.sum(weights) - 1})
 
-        result = minimize(objective, initial_guess, bounds=bounds, constraints=constraints)
+        # No short selling allowed; weights between 0 and 1
+        bounds = [(0, 1) for _ in range(self.num_assets)]
+
+        # Start with equal weights as a guess
+        initial_weights = np.ones(self.num_assets) / self.num_assets
+
+        result = minimize(objective, initial_weights, bounds=bounds, constraints=constraints)
+
         if result.success:
             self.weights = result.x
             return self.weights
         else:
-            raise ValueError("Optimization failed")
+            raise Exception("Optimization failed!")
 
-    def summary(self, stock_names):
-        print(f"Optimal portfolio weights (risk_aversion={self.risk_aversion}):")
-        for name, w in zip(stock_names, self.weights):
-            print(f"{name}: {w*100:.2f}%")
+    def print_weights(self, stock_names):
+        """
+        Nicely print out each stock's weight as a percentage.
+        """
+        print(f"\nPortfolio allocation with risk aversion = {self.risk_aversion}:")
+        for name, weight in zip(stock_names, self.weights):
+            print(f"  {name}: {weight*100:.2f}%")
 
-# 1. Download historical price data from Yahoo Finance
-stock_names =["AIQ","BOTZ","ROBO","ARKK","SMH","WTAI","XBI","IBB","FBT","SBIO","BBH","XLF","KBE","FINX","IPAY"]# ['AAPL', 'MSFT', 'GOOG'] this line is for editing, put whatever stocks you like to see an optimized portfolio 
-start_date = '2010-01-01'                    
-end_date = '2025-01-01'
-prices = yf.download(stock_names, start=start_date, end=end_date)['Close']
+# Fetch stock price data from Yahoo Finance
+stocks = ["AIQ","BOTZ","ROBO","ARKK","SMH","WTAI","XBI","IBB","FBT","SBIO","BBH","XLF","KBE","FINX","IPAY"]#['AAPL', 'MSFT', 'GOOG'] this is where you can play around with your stocks
+start = '2010-01-01'
+end = '2025-01-01'
 
-# 2. Calculate daily returns and annualize
-returns = prices.pct_change().dropna()
-mean_returns = returns.mean() * 252
-cov_matrix = returns.cov() * 252
+print("Downloading historical data for stocks...")
+price_data = yf.download(stocks, start=start, end=end)['Close']
 
-# 3. Optimize portfolio with risk-aversion parameter
-risk_aversion = 1  # This is to see how risk-tolerant you are. The higher risk the bigger the variance. 
-optimizer = MeanVarianceOptimizer(mean_returns.values, cov_matrix.values, risk_aversion)
-optimal_weights = optimizer.optimize()
-optimizer.summary(stock_names)
+# Calculate daily returns and then annualized expected returns and covariance matrix
+daily_returns = price_data.pct_change().dropna()
+annual_return = daily_returns.mean() * 252
+annual_covariance = daily_returns.cov() * 252
 
-# 4. Prepare comparison data for visualization
-cases = [
-    ('Mean-Variance Optimal', optimal_weights),
-    ('Max Return', np.eye(len(stock_names))[np.argmax(mean_returns)]),
-    ('Equal Weight', np.ones(len(stock_names))/len(stock_names)),
+# Create optimizer instance with a chosen risk aversion level
+risk_aversion_level = 1.0  # Adjust this to be more or less conservative
+optimizer = PortfolioOptimizer(annual_return.values, annual_covariance.values, risk_aversion_level)
+
+print("Running portfolio optimization...")
+best_weights = optimizer.optimize()
+optimizer.print_weights(stocks)
+
+# Let's compare some portfolio strategies
+strategies = [
+    ('Mean-Variance Optimal', best_weights),
+    ('Maximum Return Only', np.eye(len(stocks))[np.argmax(annual_return.values)]),
+    ('Equal Weight', np.ones(len(stocks)) / len(stocks))
 ]
-for name in stock_names:
-    weights = [1 if s == name else 0 for s in stock_names]
-    cases.append((f'All {name}', weights))
 
-viz_data = {'Strategy': [], 'Portfolio Return': [], 'Portfolio Variance': []}
-for label, w in cases:
-    port_return = np.dot(w, mean_returns.values)
-    port_var = np.dot(w, np.dot(cov_matrix.values, w))
-    viz_data['Strategy'].append(label)
-    viz_data['Portfolio Return'].append(port_return)
-    viz_data['Portfolio Variance'].append(port_var)
+# Add single-stock portfolios for comparison
+for stock in stocks:
+    weights = [1 if s == stock else 0 for s in stocks]
+    strategies.append((f"All {stock}", weights))
 
-viz_df = pd.DataFrame(viz_data)
+# Calculate expected return and risk for each strategy
+records = []
+for name, weights in strategies:
+    ret = np.dot(weights, annual_return.values)
+    risk = np.dot(weights, np.dot(annual_covariance.values, weights))
+    records.append({'Strategy': name, 'Return': ret, 'Risk (Variance)': risk})
 
-# 5. Plot returns and variances per strategy
-fig, ax1 = plt.subplots(figsize=(9, 5))
+df_results = pd.DataFrame(records)
 
+# Plotting the results
+fig, ax1 = plt.subplots(figsize=(10,6))
 ax2 = ax1.twinx()
-bars = ax1.bar(viz_df['Strategy'], viz_df['Portfolio Return'], color='r', label='Return')
-line = ax2.plot(viz_df['Strategy'], viz_df['Portfolio Variance'], color='g', marker='o', label='Variance')
 
-ax1.set_ylabel('Annualized Portfolio Return', color='r')
-ax2.set_ylabel('Annualized Portfolio Variance', color='g')
-ax1.set_title('Portfolio Strategies: Return and Variance')
+df_results.plot(x='Strategy', y='Return', kind='bar', ax=ax1, color='dodgerblue', legend=False)
+df_results.plot(x='Strategy', y='Risk (Variance)', kind='line', marker='o', ax=ax2, color='darkorange', legend=False)
 
-ax1.tick_params(axis='y', labelcolor='r')
-ax2.tick_params(axis='y', labelcolor='g')
-fig.autofmt_xdate(rotation=30)
+ax1.set_xlabel('')
+ax1.set_ylabel('Annualized Return', color='dodgerblue')
+ax2.set_ylabel('Annualized Risk (Variance)', color='darkorange')
+ax1.set_title('Portfolio Strategies: Return vs Risk')
 
-# Create combined legend
-bars_label = bars[0].get_label()
-line_label = line[0].get_label()
-handles = [bars, line[0]]
-labels = ['Return', 'Variance']
-ax1.legend(handles, labels, loc='upper right')
-
+ax1.tick_params(axis='y', labelcolor='dodgerblue')
+ax2.tick_params(axis='y', labelcolor='darkorange')
+plt.xticks(rotation=30)
 plt.tight_layout()
 plt.show()
