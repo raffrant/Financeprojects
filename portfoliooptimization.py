@@ -52,7 +52,7 @@ mean_returns = returns.mean() * 252
 cov_matrix = returns.cov() * 252
 
 # 3. Optimize portfolio with risk-aversion parameter
-risk_aversion = 1  # Adjust between 0 (max return only) and higher for more risk aversion
+risk_aversion = 1  # This is to see how risk-tolerant you are. The higher risk the bigger the variance. 
 optimizer = MeanVarianceOptimizer(mean_returns.values, cov_matrix.values, risk_aversion)
 optimal_weights = optimizer.optimize()
 optimizer.summary(stock_names)
