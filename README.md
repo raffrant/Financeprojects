@@ -7,5 +7,5 @@ Here I present my finance projects (until now!):
 4) Portofolio optimization (data driven, partially taken by an excellent youtube channel https://www.youtube.com/@quantprogram)
 
 
-To come 
+More to come !
 Algorithmic trading using backtrader package 
