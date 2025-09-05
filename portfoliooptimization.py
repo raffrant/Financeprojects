@@ -41,8 +41,8 @@ class MeanVarianceOptimizer:
             print(f"{name}: {w*100:.2f}%")
 
 # 1. Download historical price data from Yahoo Finance
-stock_names =["AIQ","BOTZ","ROBO","ARKK","SMH","WTAI","XBI","IBB","FBT","SBIO","BBH","XLF","KBE","FINX","IPAY"]# ['AAPL', 'MSFT', 'GOOG']
-start_date = '2010-01-01'
+stock_names =["AIQ","BOTZ","ROBO","ARKK","SMH","WTAI","XBI","IBB","FBT","SBIO","BBH","XLF","KBE","FINX","IPAY"]# ['AAPL', 'MSFT', 'GOOG'] this line is for editing, put whatever stocks you like to see an optimized portfolio 
+start_date = '2010-01-01'                    
 end_date = '2025-01-01'
 prices = yf.download(stock_names, start=start_date, end=end_date)['Close']
 
