@@ -8,4 +8,4 @@ Here I present my finance projects (until now!):
 
 
 More to come !
-Algorithmic trading using backtrader package 
+Algorithmic trading
