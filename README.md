@@ -8,4 +8,4 @@ Here I present my finance projects (until now!):
 5) Momentum and moving average trading simulation using backtrader. 
 
 More to come !
- trading
+ Machine learning with stock visualization and portfolio optimization
