@@ -50,7 +50,7 @@ class BreakoutHighRiskRewardWithMA(bt.Strategy):
             if self.crossover < 0:
                 self.close()
               
-tickers=["MSFT"]
+tickers=["MSFT"]#Depending on the stock, we may have to change the rsi , MA period etc.
 start_date = '2015-10-01'
 end_date = datetime.today().strftime('%Y-%m-%d')
 dataframes = {}
@@ -99,6 +99,7 @@ print(f"Total Trades: {trades.total.closed}")
 
 # Plot the results
 cerebro.plot()
+
 
 
 
