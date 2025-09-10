@@ -3,15 +3,6 @@ from datetime import datetime
 import pandas as pd
 import yfinance as yf
 
-'''
-lookback=10,    # Bars to look back for breakout
-        risk_reward=3,  # Risk-reward ratio
-        pfast=20,       # Fast MA period
-        pslow=40,       # Slow MA period
-        size=955 ,        # Position size
-        rsi_period=10,
-        rsi_threshold=20 APPLE
-'''
 # Combined Strategy Class
 class BreakoutHighRiskRewardWithMA(bt.Strategy):
     params = dict(
@@ -73,7 +64,7 @@ for ticker in tickers:
 
 # Initialize Backtrader engine
 cerebro = bt.Cerebro()
-cerebro.broker.setcash(100000)
+cerebro.broker.setcash(100000) #put the money you want.
 
 # Add data feeds
 for ticker, df in dataframes.items():
@@ -84,7 +75,7 @@ for ticker, df in dataframes.items():
 cerebro.addstrategy(BreakoutHighRiskRewardWithMA)
 # Set up the Backtrader engine (Cerebro)
 # Add analyzers for key metrics
-cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe')
+cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe')       #check classic metrics for trading 
 cerebro.addanalyzer(bt.analyzers.DrawDown, _name='drawdown')
 cerebro.addanalyzer(bt.analyzers.Returns, _name='returns')
 cerebro.addanalyzer(bt.analyzers.TradeAnalyzer, _name='trades')
@@ -108,6 +99,7 @@ print(f"Total Trades: {trades.total.closed}")
 
 # Plot the results
 cerebro.plot()
+
 
 
 
