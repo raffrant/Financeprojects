@@ -1,12 +1,22 @@
 # Finance projects
+Quantitative Finance Projects
 
-Here I present my finance projects (until now!):
-1) Simple Black–Scholes model through brownian motion to simulate financial assets.
-2) Visualization of popular stocks like MSFT, AAPL etc. (datavisual file)
-3) Interactive Visualization of stocks using streamlit (datavisual file)
-4) Portfolio optimization for a weighted average for a couple of stocks taking into account variance.
-5) Portofolio optimization (data driven, partially taken by an excellent youtube channel https://www.youtube.com/@quantprogram)
-6) Momentum and moving average trading simulation using backtrader. 
-7) Machine learning (adam optimization) when to buy or sell MSFT stock. (ML)
+Below is a portfolio of applied quantitative finance projects that demonstrate expertise in mathematical modeling, data analysis, and algorithmic trading. Source code and visualizations are available in linked files; all projects leverage Python and industry-standard libraries.
+
+1) Option Pricing Models:
+   Developed and simulated asset paths using Brownian motion for Black–Scholes option pricing. Extended analysis to include Greeks, model validation, and Monte Carlo estimation.
+
+2) Stock Data Analytics and Visualization:
+   Designed static and interactive dashboards (via Streamlit) for visual exploration of major stocks (e.g., MSFT, AAPL), highlighting trends, anomalies, and time-series dynamics. (datavisual file)
+
+4) Portfolio Optimization:
+   Programmed multi-asset portfolio optimization routines utilizing mean-variance analysis. Implemented both classical weighted approaches and data-driven, real-market inspired algorithms based     on reputable quant research channels (https://www.youtube.com/@quantprogram).
    
-More to come, especially in machine learning !
+5) Algorithmic Trading Strategies:
+   Backtested systematic momentum and moving average trading systems using Backtrader, evaluating Sharpe ratio, drawdown, and execution performance under transaction costs.
+
+6) Machine Learning in Trading:
+   Applied supervised learning techniques (Adam-optimized neural networks) to predict entry/exit points for assets such as MSFT. The framework includes automated feature engineering and             validation on out-of-sample data.
+   
+Ongoing and Upcoming:
+Currently extending machine learning approaches for regime detection and automated market making. Additional projects in high-frequency data modeling and alternative data integration are in progress.
