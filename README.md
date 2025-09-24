@@ -4,10 +4,10 @@ Quantitative Finance Projects
 Below is a portfolio of applied quantitative finance projects that demonstrate expertise in mathematical modeling, data analysis, and algorithmic trading. Source code and visualizations are available in linked files; all projects leverage Python and industry-standard libraries.
 
 1) Option Pricing Models:
-   Developed and simulated asset paths using Brownian motion for Black–Scholes option pricing. Extended analysis to include Greeks, model validation, and Monte Carlo estimation.
+   Developed and simulated asset paths using Brownian motion for Black–Scholes option pricing.
 
 2) Stock Data Analytics and Visualization:
-   Designed static and interactive dashboards (via Streamlit) for visual exploration of major stocks (e.g., MSFT, AAPL), highlighting trends, anomalies, and time-series dynamics. (datavisual file)
+   Designed static and interactive dashboards (via Streamlit) for visual exploration of major stocks (e.g., MSFT, AAPL), highlighting trends, and time-series dynamics. (datavisual file)
 
 4) Portfolio Optimization:
    Programmed multi-asset portfolio optimization routines utilizing mean-variance analysis. Implemented both classical weighted approaches and data-driven, real-market inspired algorithms based     on reputable quant research channels (https://www.youtube.com/@quantprogram).
