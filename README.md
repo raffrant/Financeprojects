@@ -7,6 +7,6 @@ Here I present my finance projects (until now!):
 4) Portfolio optimization for a weighted average for a couple of stocks taking into account variance.
 5) Portofolio optimization (data driven, partially taken by an excellent youtube channel https://www.youtube.com/@quantprogram)
 6) Momentum and moving average trading simulation using backtrader. 
-
-More to come !
- Machine learning with stock visualization and portfolio optimization
+7) Machine learning (adam optimization) when to buy or sell MSFT stock. (ML)
+   
+More to come, especially in machine learning !
