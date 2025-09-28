@@ -10,7 +10,7 @@ Below is a portfolio of applied quantitative finance projects that demonstrate e
    Designed static and interactive dashboards (via Streamlit) for visual exploration of major stocks (e.g., MSFT, AAPL), highlighting trends, and time-series dynamics. (datavisual file)
 
 4) Portfolio Optimization:
-   Programmed multi-asset portfolio optimization routines utilizing mean-variance analysis. Implemented both classical weighted approaches and data-driven, real-market inspired algorithms based     on reputable quant research channels (https://www.youtube.com/@quantprogram). (portfoliochecking file)
+   Programmed multi-asset portfolio optimization routines utilizing mean-variance analysis. Implemented both classical weighted approaches and data-driven, real-market inspired algorithms based     on reputable quant research channels (https://www.youtube.com/@quantprogram). (portfoliocheck file)
    
 5) Algorithmic Trading Strategies:
    Backtested systematic momentum and moving average trading systems using Backtrader, evaluating Sharpe ratio, drawdown, and execution performance under transaction costs.
