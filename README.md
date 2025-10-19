@@ -17,6 +17,7 @@ Below is a portfolio of applied quantitative finance projects that demonstrate e
 
 6) Machine Learning in Trading:
    Applied supervised learning techniques to predict entry/exit points for assets such as MSFT. The framework includes automated feature engineering and             validation on out-of-sample data.
-   
+
+Some codes were optimized by AI.   
 Ongoing and Upcoming:
 Currently extending machine learning approaches for regime detection and automated market making. Additional projects in high-frequency data modeling and alternative data integration are in progress.
