@@ -27,7 +27,7 @@ int main() {
     
     std::vector<double> sigma(9);
     for (int i = 0; i < 9; ++i) {
-        sigma[i] = 0.5 + i * (4.5 - 0.5) / 8.0;
+        sigma[i] = 0.5 + i * 0.5;
     }
     
 
