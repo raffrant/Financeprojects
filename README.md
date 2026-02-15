@@ -16,7 +16,7 @@ Below is a portfolio of applied quantitative finance projects that demonstrate e
    Backtested systematic momentum and moving average trading systems using Backtrader, evaluating Sharpe ratio, drawdown, and execution performance under transaction costs.
 
 6) Machine Learning in Trading:
-   Applied supervised learning techniques to predict entry/exit points for assets such as MSFT. The framework includes automated feature engineering and             validation on out-of-sample data.
+   Applied supervised learning techniques to predict entry/exit points for assets such as MSFT and SPY. The framework includes automated feature engineering and validation on out-of-sample data. Check swing trading approach.
 
 7) Risk management analysis through stop loss.    
 
