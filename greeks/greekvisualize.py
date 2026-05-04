@@ -42,17 +42,15 @@ class BSPhysicsGreeks:
         return bs_price(self.S, self.K, self.T, self.r, self.sigma, self.q, call)
 
     def _central_diff(self, var: str, h: float, call=True):
-        """Generic central derivative: (f(x+h)-f(x-h))/(2h)."""
         orig = getattr(self, var)
 
-        setattr(self, var, orig + h)
+        setattr(self, var, orig + h)   
         p_up = self.price(call)
 
-        setattr(self, var, orig - h)
+        setattr(self, var, orig - h)   
         p_down = self.price(call)
 
-        setattr(self, var, orig)  # restore
-
+        setattr(self, var, orig)       
         return (p_up - p_down) / (2.0 * h)
 
     def _second_central_diff_S(self, h: float, call=True):
